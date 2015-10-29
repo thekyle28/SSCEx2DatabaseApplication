@@ -47,9 +47,9 @@ public class DatabaseCreation {
 					+ "FOREIGN KEY (titleID) REFERENCES Titles (titleID))";
 			
 			String createStudentRegistrationTable = "CREATE TABLE StudentRegistration ("
-					+ "registrationTypeID INTEGER PRIMARY KEY,"
-					+ "yearOfStudy DATE NOT NULL,"
 					+ "studentID INTEGER, "
+					+ "yearOfStudy INTEGER,"
+					+ "registrationTypeID INTEGER PRIMARY KEY,"
 					+ "FOREIGN KEY (studentID) REFERENCES Student (studentID))";
 			
 			String createStudentContactTable = "CREATE TABLE StudentContact ("+

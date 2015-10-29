@@ -32,6 +32,11 @@ public class PopulateDatabase {
 			populateStudents(conn);
 			populateLecturers(conn);
 			populateTutor(conn);
+			populateRegistration(conn);
+			populateStudentContact(conn);
+			populateNextOfKin(conn);
+			populateLecturerContact(conn);
+			populateRegistrationType(conn);
 			
 						
 			ResultSet rs =
@@ -65,6 +70,87 @@ public class PopulateDatabase {
 		
 	}
 	
+
+	private void populateRegistrationType(Connection conn) throws SQLException {
+		String populateRegistrationType= "INSERT INTO RegistrationType "
+				+ "VALUES(1,'normal');"
+				+ "INSERT INTO RegistrationType "
+				+ "VALUES(2, 'repeat');"
+				+ "INSERT INTO RegistrationType "
+				+ "VALUES(3, 'external');";
+		
+		Statement stmt = conn.createStatement();
+		stmt.executeUpdate(populateRegistrationType);				
+	}
+
+
+	private void populateLecturerContact(Connection conn) throws SQLException {
+		String populateLecturerContact= "INSERT INTO LecturerContact "
+				+ "VALUES(0, 39, 'lec1@bham.ac.uk');"
+				+ "INSERT INTO LecturerContact "
+				+ "VALUES(1, 101, 'lec2@hotmail.co.uk');"
+				+ "INSERT INTO LecturerContact "
+				+ "VALUES(2, 123, 'lec3@gmail.com');"
+				+ "INSERT INTO LecturerContact "
+				+ "VALUES(3, 384, 'lec4@outlook.co.uk');"
+				+ "INSERT INTO LecturerContact "
+				+ "VALUES(4,298, 'lec5@hotmail.co.uk');";
+		
+		Statement stmt = conn.createStatement();
+		stmt.executeUpdate(populateLecturerContact);				
+	}
+
+
+	private void populateNextOfKin(Connection conn) throws SQLException {
+		String populateNextOfKin= "INSERT INTO NextOfKinContact "
+				+ "VALUES(1, 'Joanne', 'nok1@hotmail.co.uk', ' 23 blah nok, Selly Oak, Birmingham, B35 7HU');"
+				+ "INSERT INTO NextOfKinContact "
+				+ "VALUES(2, 'Jennifer Al', 'blah@nok2.com', '192 nok avenue, Selly Oak, Birmingham, B12 9OD');"
+				+ "INSERT INTO NextOfKinContact "
+				+ "VALUES(3, 'Tim', 'nok3@outlook.co.uk', '23 fourth street, Nok Oak, Birmingham, B19 0SS');"
+				+ "INSERT INTO NextOfKinContact "
+				+ "VALUES(4, 'bar@hnoktmail.co.uk', '12345 six street, Selly Oak, nokirmingham, B69 96Y');"
+				+ "INSERT INTO NextOfKinContact "
+				+ "VALUES(5, 'nokc@yahoo.co.uk', '29 aston nok boulevard, Selly Oak, Birmingham, B39 UMW');";
+		
+		Statement stmt = conn.createStatement();
+		stmt.executeUpdate(populateNextOfKin);		
+	}
+
+
+	private void populateStudentContact(Connection conn) throws SQLException {
+		String populateStudentContact= "INSERT INTO StudentContact "
+				+ "VALUES(1, 'blah@hotmail.co.uk', '19 blah street, Selly Oak, Birmingham, B35 7HU');"
+				+ "INSERT INTO StudentContact "
+				+ "VALUES(2, 'blah@gmail.com', '192 find avenue, Selly Oak, Birmingham, B12 9OD');"
+				+ "INSERT INTO StudentContact "
+				+ "VALUES(3, 'foo@outlook.co.uk', '23 fourth street, Selly Oak, Birmingham, B19 0SS');"
+				+ "INSERT INTO StudentContact "
+				+ "VALUES(4, 'bar@hotmail.co.uk', '12345 six street, Selly Oak, Birmingham, B69 96Y');"
+				+ "INSERT INTO StudentContact "
+				+ "VALUES(5, 'sheep@yahoo.co.uk', '29 aston webb boulevard, Selly Oak, Birmingham, B39 UMW');";
+		
+		Statement stmt = conn.createStatement();
+		stmt.executeUpdate(populateStudentContact);			
+	}
+
+
+	private void populateRegistration(Connection conn) throws SQLException {
+		String populateStudentRegistration = "INSERT INTO StudentRegistration "
+				+ "VALUES(1, 2, 1);"
+				+ "INSERT INTO StudentRegistration "
+				+ "VALUES(2, 1, 2);"
+				+ "INSERT INTO StudentRegistration "
+				+ "VALUES(3, 2, 3);"
+				+ "INSERT INTO StudentRegistration "
+				+ "VALUES(4, 3, 4);"
+				+ "INSERT INTO StudentRegistration "
+				+ "VALUES(5, 4, 5);";
+		
+		Statement stmt = conn.createStatement();
+		stmt.executeUpdate(populateStudentRegistration);		
+	}
+
 
 	private void populateTitles(Connection conn) throws SQLException {
 		String populateTitlesTable = "INSERT INTO Titles "

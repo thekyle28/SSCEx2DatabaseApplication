@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
@@ -77,15 +78,39 @@ public class DatabaseInterface {
 	}
 	
 	private void studentReport(Connection conn) throws SQLException {
-		PreparedStatement getStudent = conn.prepareStatement("SELECT * FROM Student"
-				+ "WHERE studentID = ?;");
+		PreparedStatement getStudent = conn.prepareStatement("SELECT "
+				+ "t.titleString, s.foreName, s.familyName, s.dateOfBirth, s.studentID, sr.yearOfStudy, "
+				+ "rt.description, sc.eMailAddress, sc.postalAddress, nokc.foreName, nokc.eMailAddress, "
+				+ "nokc.postalAddress"
+				+ "  FROM Student s, StudentRegistration sr, StudentContact  sc, NextOfKinContact  nokc, "
+				+ "Titles t, registrationType  rt  WHERE s.studentID=? and s.titleID =t.titleID and s.studentID =sr.studentID "
+				+ "and s.studentID = sc.studentID and s.studentID = nokc.studentID and sr.registrationTypeID = rt.registrationTypeID;");
 		Scanner scan = new Scanner(System.in);
-		int student = scan .nextInt();
+		System.out.println("Please enter the student ID number of the student you wish to collect a report for.");
+		int student = scan.nextInt();
 		getStudent.setInt(1, student);
 		ResultSet rs = getStudent.executeQuery();
+		 ResultSetMetaData rsmd = rs.getMetaData();
+		    int columnsNumber = rsmd.getColumnCount();
+		    while (rs.next()) {
+		        for (int i = 1; i <= columnsNumber; i++) {
+		            String columnValue = rs.getString(i);
+		            System.out.println(rsmd.getColumnName(i) +": " + columnValue);
+		        }
+		    }
+		PreparedStatement getStudentTutor = conn.prepareStatement("SELECT Lecturer.foreName, Lecturer.lecturerID FROM Tutor, Lecturer "
+				+ "WHERE Tutor.studentID = ? and Tutor.studentID = Tutor.lecturerID and Tutor.lecturerID=Lecturer.lecturerID ");
+		getStudentTutor.setInt(1, student);
+		ResultSet rs2 = getStudentTutor.executeQuery();
+		 ResultSetMetaData rsmd2 = rs2.getMetaData();
+		    int columnsNumber2 = rsmd2.getColumnCount();
+		    while (rs2.next()) {
+		        for (int i = 1; i <= columnsNumber2; i++) {
+		            String columnValue2 = rs2.getString(i);
+		            System.out.println(rsmd2.getColumnName(i) +": " + columnValue2);
+		        }
+		    }
 		
-
-
 	}
 
 	private void lecturerReport(Connection conn) {
