@@ -98,8 +98,8 @@ public class DatabaseInterface {
 		            System.out.println(rsmd.getColumnName(i) +": " + columnValue);
 		        }
 		    }
-		PreparedStatement getStudentTutor = conn.prepareStatement("SELECT Lecturer.foreName, Lecturer.lecturerID FROM Tutor, Lecturer "
-				+ "WHERE Tutor.studentID = ? and Tutor.studentID = Tutor.lecturerID and Tutor.lecturerID=Lecturer.lecturerID ");
+		PreparedStatement getStudentTutor = conn.prepareStatement("SELECT Lecturer.foreName, Lecturer.lecturerID FROM Student, Tutor, Lecturer "
+				+ "WHERE Tutor.studentID = ? and Tutor.studentID = Student.studentID and Tutor.lecturerID=Lecturer.lecturerID ");
 		getStudentTutor.setInt(1, student);
 		ResultSet rs2 = getStudentTutor.executeQuery();
 		 ResultSetMetaData rsmd2 = rs2.getMetaData();
@@ -113,9 +113,26 @@ public class DatabaseInterface {
 		
 	}
 
-	private void lecturerReport(Connection conn) {
-		// TODO Auto-generated method stub
-		
+	private void lecturerReport(Connection conn) throws SQLException {
+		PreparedStatement getLecturerTutees = conn.prepareStatement("SELECT t.titleString, s.foreName, s.familyName, s.studentID, rt.description, "
+				+ "s.dateOfBirth, sc.eMailAddress, sc.postalAddress"
+				+ "FROM Student as s, RegistrationType rt, StudentContact sc, Lecturer l, Titles t, Tutor tu, StudentRegistration sr"
+				+ "WHERE lecturerID=? and s.studentID = tu.studentID and l.lecturerID=tu.lecturerID and s.studentID = sc.studentID and"
+				+ "sr.registrationTypeID = rt.registrationTypeID and sr.studentID = s.studentID and s.titleID = t.titleID"
+				+ "ORDER BY sr.yearOfStudy;");
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Please enter the lecturer ID number of the lecturer you wish to collect a report for.");
+		int lecturer = scan.nextInt();
+		getLecturerTutees.setInt(1, lecturer);
+		ResultSet rs = getLecturerTutees.executeQuery();
+		 ResultSetMetaData rsmd = rs.getMetaData();
+		    int columnsNumber = rsmd.getColumnCount();
+		    while (rs.next()) {
+		        for (int i = 1; i <= columnsNumber; i++) {
+		            String columnValue = rs.getString(i);
+		            System.out.println(rsmd.getColumnName(i) +": " + columnValue);
+		        }
+		    }
 	}
 
 	private void registerTutor(Connection conn) throws SQLException{
