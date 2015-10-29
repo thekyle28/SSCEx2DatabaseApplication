@@ -37,11 +37,11 @@ public class PopulateDatabase {
 			ResultSet rs =
 					stmt.executeQuery(
 					"SELECT * "
-					+ "FROM Titles");
+					+ "FROM Student");
 			
 			while (rs.next())
 			{ int sid = rs.getInt(1);
-			sid=rs.getInt("titleID");
+			sid=rs.getInt("studentID");
 			System.out.println(sid);
 			}			
 			
@@ -63,9 +63,6 @@ public class PopulateDatabase {
 			System.out.println("Failed to make connection");
 		}
 		
-		
-		
-
 	}
 	
 
@@ -127,7 +124,7 @@ public class PopulateDatabase {
 
 		     gc.set(Calendar.DAY_OF_YEAR, dayOfYear);
 			 populateStudentsTable += "INSERT INTO Student "
-					+ "VALUES("+i+", "+title+", 'firstName" + i +"', 'SFName" + i + "', '"+gc.get(Calendar.YEAR) + "-" + month + "-" + gc.get(Calendar.DAY_OF_YEAR) +"');";
+					+ "VALUES("+i+", "+title+", 'firstName" + i +"', 'SFName" + i + "', '"+ gc.get(Calendar.DAY_OF_YEAR) + "-" + month + "-" + gc.get(Calendar.YEAR)+"');";
 				
 		}
 		
@@ -135,6 +132,8 @@ public class PopulateDatabase {
 		stmt.executeUpdate(populateStudentsTable);
 		
 	}
+	
+	
 	
 	 public static int randBetween(int start, int end) {
 	        return start + (int)Math.round(Math.random() * (end - start));

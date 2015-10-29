@@ -61,14 +61,14 @@ public class DatabaseCreation {
 			String createNextOfKinTable = "CREATE TABLE NextOfKinContact ("+
 					"studentID INTEGER , " +
 					"foreName CHAR(20), " +
-					"eMailAddress CHAR(254), " +
+					"eMailAddress CHAR(254) UNIQUE, " +
 					"postalAddress VARCHAR , " + 
 					"FOREIGN KEY (studentID) REFERENCES Student (studentID))";
 			
 			String createLecturerContactTable = "CREATE TABLE LecturerContact ("
 					+ "lecturerID INTEGER ,"
 					+ "office INTEGER, "
-					+ "eMailAddress CHAR(254), " 
+					+ "eMailAddress CHAR(254) UNIQUE, " 
 					+ "FOREIGN KEY (lecturerID) REFERENCES Lecturer (lecturerID))";
 			
 			String createTutorTable = "CREATE TABLE Tutor ("
@@ -78,7 +78,7 @@ public class DatabaseCreation {
 					+ "FOREIGN KEY (lecturerID) REFERENCES Lecturer (lecturerID))";
 			
 			String createRegistrationTypeTable = "CREATE TABLE RegistrationType ("
-					+ "registrationTypeID INTEGER ,"
+					+ "registrationTypeID INTEGER PRIMARY KEY ,"
 					+ "description VARCHAR )";
 
 						
